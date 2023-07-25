@@ -13,21 +13,23 @@ public class Anggota {
     private String kodeanggota;
     private String namaanggota;
     private String alamat;
-    private String jeniskelammin;
+    private String jeniskelamin;
     
-    //mmethod construktor
-
+    //contruktor
+    
     public Anggota() {
+        
     }
-
-    public Anggota(String kodeanggota, String namaanggota, String alamat, String jeniskelammin) {
+    
+    public Anggota(String kodeanggota, String namaanggota, String alamat, String jeniskelamin) {
         this.kodeanggota = kodeanggota;
         this.namaanggota = namaanggota;
         this.alamat = alamat;
-        this.jeniskelammin = jeniskelammin;
+        this.jeniskelamin = jeniskelamin;
     }
     
-    //method accesor
+   
+    //acessor
 
     public String getKodeanggota() {
         return kodeanggota;
@@ -53,13 +55,19 @@ public class Anggota {
         this.alamat = alamat;
     }
 
-    public String getJeniskelammin() {
-        return jeniskelammin;
+    public String getJeniskelamin() {
+        return jeniskelamin;
     }
 
-    public void setJeniskelammin(String jeniskelammin) {
-        this.jeniskelammin = jeniskelammin;
+    public void setJeniskelamin(String jeniskelamin) {
+        this.jeniskelamin = jeniskelamin;
     }
     
     
+
+    
+
+   
+    
+   
 }
