@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ulfah.controlller;
+package Ulfah.controller;
 
 import Ulfah.dao.AnggotaDao;
 import Ulfah.dao.AnggotaDaoImpl;
@@ -27,19 +27,19 @@ public class AnggotaController {
     private Anggota anggota;
     private AnggotaDao anggotaDao;
     private Connection con;
-    private Koneksi koneksi;
+    private Koneksi k;
     
     public AnggotaController(FormAnggota formAnggota){
         try {
             this.formAnggota = formAnggota;
             anggotaDao = new AnggotaDaoImpl();
-            koneksi = new Koneksi ();
-            con = koneksi.getKoneksi();
+            k = new Koneksi();
+            con = k.getKoneksi();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
-        }    
+        }
     }
     
     public void clearForm(){
@@ -60,7 +60,7 @@ public class AnggotaController {
             anggota.setKodeanggota(formAnggota.getTxtKodeanggota().getText());
             anggota.setNamaanggota(formAnggota.getTxtNamaanggota().getText());
             anggota.setAlamat(formAnggota.getTxtAlamat().getText());
-            anggota.setJeniskelammin(formAnggota.getCboJeniskelamin().getSelectedItem().toString());
+            anggota.setJeniskelamin(formAnggota.getCboJeniskelamin().getSelectedItem().toString());
             anggotaDao.insert(con, anggota);
             JOptionPane.showMessageDialog(formAnggota, "Entri OK");
         } catch (Exception ex) {
@@ -74,19 +74,31 @@ public class AnggotaController {
             anggota.setKodeanggota(formAnggota.getTxtKodeanggota().getText());
             anggota.setNamaanggota(formAnggota.getTxtNamaanggota().getText());
             anggota.setAlamat(formAnggota.getTxtAlamat().getText());
-            anggota.setJeniskelammin(formAnggota.getCboJeniskelamin().getSelectedItem().toString());
+            anggota.setJeniskelamin(formAnggota.getCboJeniskelamin().getSelectedItem().toString());
             anggotaDao.update(con, anggota);
             JOptionPane.showMessageDialog(formAnggota, "Update OK");
         } catch (Exception ex) {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     public void delete(){
         try {
             anggotaDao.delete(con, anggota);
             JOptionPane.showMessageDialog(formAnggota, "Delete OK");
+        } catch (Exception ex) {
+            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void tabelKlik(){
+        try {
+            String kode = formAnggota.getTblAnggota().getValueAt(formAnggota.getTblAnggota().getSelectedRow(),0).toString();
+            anggota = anggotaDao.getAnggota(con, kode);
+            formAnggota.getTxtKodeanggota().setText(anggota.getKodeanggota());
+            formAnggota.getTxtNamaanggota().setText(anggota.getNamaanggota());
+            formAnggota.getTxtAlamat().setText(anggota.getAlamat());
+            formAnggota.getCboJeniskelamin().setSelectedItem(anggota.getJeniskelamin());
         } catch (Exception ex) {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,8 +111,8 @@ public class AnggotaController {
             if(anggota != null){
                 formAnggota.getTxtNamaanggota().setText(anggota.getNamaanggota());
                 formAnggota.getTxtAlamat().setText(anggota.getAlamat());
-                formAnggota.getCboJeniskelamin().setSelectedItem(anggota.getJeniskelammin());
-            }else{ 
+                formAnggota.getCboJeniskelamin().setSelectedItem(anggota.getJeniskelamin());
+            }else{
                 JOptionPane.showMessageDialog(formAnggota, "Data Tidak Data");
             }
         } catch (Exception ex) {
@@ -119,7 +131,7 @@ public class AnggotaController {
                     anggota1.getKodeanggota(),
                     anggota1.getNamaanggota(),
                     anggota1.getAlamat(),
-                    anggota1.getJeniskelammin()
+                    anggota1.getJeniskelamin()
                 };
                 tabel.addRow(row);
             }
@@ -127,5 +139,6 @@ public class AnggotaController {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     
 }
